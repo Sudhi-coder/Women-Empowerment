@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Flashcard & Quiz App</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url("https://www.shutterstock.com/image-vector/we-can-do-it-feminine-260nw-1071422246.jpg") no-repeat center center/cover;
+            backdrop-filter: blur(5px);
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 300px;
+            height: 300px;
+            border: 1px solid #ccc;
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+        }
+        .image-container img {
+            width: 100%;
+            height: 80%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Flashcard & Quiz App</h1>
+        
+        <div class="image-grid">
+            <div class="image-container">
+                <div class="tab">
+                    <a href="women_hygiene.html" target="_blank">
+                        <img src="https://img.freepik.com/premium-vector/menstruation-theme-feminine-hygiene-pad-soap-menstrual-cup-calendar-painkillers-women-s-health-concept-feminine-hygiene-products-cartoon-vector-illustration-isolated-white-background_559428-925.jpg" alt="Women Hygiene">
+                        <span>Women Hygiene</span>
+                    </a>
+                </div>
+            </div>
+    
+            <div class="image-container">
+                <div class="tab">
+                    <a href="successful_stories.html" target="_blank">
+                        <img src="https://tse4.mm.bing.net/th?id=OIP.c5w2tyT6eyeerjBQ84E0uwHaEK&w=266&h=266&c=7" alt="Successful Stories">
+                        <span>Successful Stories</span>
+                    </a>
+                </div>
+            </div>
+            <div class="image-container">
+                <div class="tab">
+                    <a href="Quiz.html" target="_blank">
+                        <img src="https://t3.ftcdn.net/jpg/05/19/43/54/360_F_519435456_iuZWEuwGOWmygRohfDOT0uKVADWpumMk.jpg" alt="Quiz">
+                        <span>Quiz</span>
+                    </a>
+                </div>
+            </div>
+            <div class="image-container">
+                <div class="tab">
+                    <a href="Flashcards.html" target="_blank">
+                        <img src="https://www.gettingsmart.com/wp-content/uploads/2015/02/mobile-apps.gendiy-482x335-1.jpg" alt="Flashcards">
+                        <span>Flashcards</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

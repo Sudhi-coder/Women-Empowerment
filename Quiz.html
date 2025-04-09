@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Are You Ready To Participate In The Quiz?</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            background: url('background.jpg') no-repeat center center/cover, #f0f0f0;
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .container-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+        .container {
+            width: 30%;
+            height: 200px;
+            background: rgba(173, 216, 230, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .container:hover {
+            transform: scale(1.05);
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .container span {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        @media (max-width: 768px) {
+            .container {
+                width: 45%;
+                height: 180px;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                width: 100%;
+                height: 150px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <script>
+        function openEmptyPage() {
+            window.open('', '_blank');
+        }
+    </script>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Back to Main Page</a>
+    <h1>Are You Ready To Participate In The Quiz?</h1>
+    <div class="container-wrapper">
+        <div class="container" onclick="window.location.href='Women Empowerment.html';">
+            <img src="https://media.licdn.com/dms/image/D5612AQGMjVUsRlauVw/article-cover_image-shrink_600_2000/0/1716462056375?e=2147483647&v=beta&t=XJ9Texk24bVFOptgMo85tmQs_4ogMshSVptoxnxbnEQ" alt="Women Empowerment">
+            <span>Women Empowerment</span>
+        </div>
+        <div class="container" onclick="window.location.href='Women Barriers.html';">
+            <img src="https://cloudfront-eu-central-1.images.arcpublishing.com/businessoffashion/YMWJMAHA6FFORKK6CP4PBWTWLE.jpg" alt="Women in Male Dominated Fields">
+            <span>Women in Male Dominated Fields</span>
+        </div>
+        <div class="container" onclick="window.location.href='Women Entreprenuers.html';">
+            <img src="https://res.cloudinary.com/people-matters/image/upload/q_auto,f_auto/v1636262096/1636262095.jpg" alt="Entrepreneurial Women">
+            <span>Entrepreneurial Women</span>
+        </div>
+        <div class="container" onclick="window.location.href='Stem.html';">
+            <img src="https://edventures.com/cdn/shop/articles/Women_in_STEM_Stats_Cover_1.jpg?v=1562185756" alt="Women in STEM">
+            <span>Women in STEM</span>
+        </div>
+        <div class="container" onclick="window.location.href='successful_stories.html';">
+            <img src="https://media.licdn.com/dms/image/v2/C4D12AQHTxCKfbTpxHg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1520158137557?e=2147483647&v=beta&t=q-LOfd0sIiYkN-wR8RywsagyuAJe1t-oBylN-SEAjKY" alt="Corporate Success Stories">
+            <span>Corporate Success Stories</span>
+        </div>
+    </div>
+</body>
+</html>

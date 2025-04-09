@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Indian Woman Entrepreneur</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+            padding: 30px;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .game-container {
+            background-color: #fff;
+            padding: 60px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 700px;
+            height: 400px;
+            max-width: 100%;
+            text-align: center;
+        }
+        .question {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        .answer-buttons {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .answer-buttons img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .answer-buttons img:hover {
+            transform: scale(1.1);
+        }
+        .result {
+            font-size: 22px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Guess the Indian Woman Entrepreneur</h1>
+        <div class="question" id="question">Who is the founder of Nykaa?</div>
+        <div class="answer-buttons">
+            <img id="falguni" src="https://imageio.forbes.com/specials-images/imageserve/624433b350f24c36ffc7b3b0/0x0.jpg?format=jpg&crop=1390,1391,x0,y248,safe&height=416&width=416&fit=bounds" alt="Falguni Nayar">
+            <img id="indra" src="https://eu-images.contentstack.com/v3/assets/blt58a1f8f560a1ab0e/bltba884782419824e4/669eda77d00066fcfd170abd/Pepsi_-_Nooyi_1533572874.jpg?width=1280&auto=webp&quality=95&format=jpg&disable=upscale" alt="Indra Nooyi">
+            <img id="kiran" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCIxLvpyDAdW9HvsG9OQ3WfabS7i4YR290nZqpgkTDdq5wNAFYXWTvnIVM-EnfOpyzQzY&usqp=CAU" alt="Kiran Mazumdar-Shaw">
+            <img id="vandana" src="https://media.assettype.com/delhiwants/2024-09-11/q7tvmxt2/Vandana%20Luthra%20VLCC.PNG?w=1200&h=675&auto=format%2Ccompress&fit=max&enlarge=true" alt="Vandana Luthra">
+        </div>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Who is the founder of Nykaa?",
+                correctAnswer: "Falguni Nayar",
+                choices: [
+                    { name: "Falguni Nayar", image: "https://imageio.forbes.com/specials-images/imageserve/624433b350f24c36ffc7b3b0/0x0.jpg?format=jpg&crop=1390,1391,x0,y248,safe&height=416&width=416&fit=bounds" },
+                    { name: "Indra Nooyi", image: "https://eu-images.contentstack.com/v3/assets/blt58a1f8f560a1ab0e/bltba884782419824e4/669eda77d00066fcfd170abd/Pepsi_-_Nooyi_1533572874.jpg?width=1280&auto=webp&quality=95&format=jpg&disable=upscale" },
+                    { name: "Kiran Mazumdar-Shaw", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCIxLvpyDAdW9HvsG9OQ3WfabS7i4YR290nZqpgkTDdq5wNAFYXWTvnIVM-EnfOpyzQzY&usqp=CAU" },
+                    { name: "Vandana Luthra", image: "https://media.assettype.com/delhiwants/2024-09-11/q7tvmxt2/Vandana%20Luthra%20VLCC.PNG?w=1200&h=675&auto=format%2Ccompress&fit=max&enlarge=true" },
+                ]
+            },
+            {
+                question: "Which entrepreneur founded Biocon?",
+                correctAnswer: "Kiran Mazumdar-Shaw",
+                choices: [
+                    { name: "Vandana Luthara", image: "https://media.assettype.com/delhiwants/2024-09-11/q7tvmxt2/Vandana%20Luthra%20VLCC.PNG?w=1200&h=675&auto=format%2Ccompress&fit=max&enlarge=true" },
+                    { name: "Indra Nooyi", image: "https://eu-images.contentstack.com/v3/assets/blt58a1f8f560a1ab0e/bltba884782419824e4/669eda77d00066fcfd170abd/Pepsi_-_Nooyi_1533572874.jpg?width=1280&auto=webp&quality=95&format=jpg&disable=upscale" },
+                    { name: "Kiran Mazumdar-Shaw", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCIxLvpyDAdW9HvsG9OQ3WfabS7i4YR290nZqpgkTDdq5wNAFYXWTvnIVM-EnfOpyzQzY&usqp=CAU" },
+                    { name: "Richa Kar", image: "https://media.licdn.com/dms/image/v2/D4D03AQHfVwNpk8nCiA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1680602972520?e=2147483647&v=beta&t=NX_Do8_C8L8pIpO9DD4hhHza5Kbl-bx66DaW5ZvZKAY" },
+                ]
+            },
+
+            {
+                question: "Who is the co-founder of Zivame?",
+                correctAnswer: "Richa Kar",
+                choices: [
+                    { name: "Falguni Nayar", image: "https://imageio.forbes.com/specials-images/imageserve/624433b350f24c36ffc7b3b0/0x0.jpg?format=jpg&crop=1390,1391,x0,y248,safe&height=416&width=416&fit=bounds" },
+                    { name: "Richa Kar", image: "https://media.licdn.com/dms/image/v2/D4D03AQHfVwNpk8nCiA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1680602972520?e=2147483647&v=beta&t=NX_Do8_C8L8pIpO9DD4hhHza5Kbl-bx66DaW5ZvZKAY" },
+                    { name: "Indra Nooyi", image: "https://eu-images.contentstack.com/v3/assets/blt58a1f8f560a1ab0e/bltba884782419824e4/669eda77d00066fcfd170abd/Pepsi_-_Nooyi_1533572874.jpg?width=1280&auto=webp&quality=95&format=jpg&disable=upscale" },
+                    { name: "Kiran Mazumdar-Shaw", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCIxLvpyDAdW9HvsG9OQ3WfabS7i4YR290nZqpgkTDdq5wNAFYXWTvnIVM-EnfOpyzQzY&usqp=CAU" },
+                ]
+            },
+
+            {
+                question: "Who is known for her contributions to VLCC?",
+                correctAnswer: "Vandana Luthra",
+                choices: [
+                    { name: "Falguni Nayar", image: "https://imageio.forbes.com/specials-images/imageserve/624433b350f24c36ffc7b3b0/0x0.jpg?format=jpg&crop=1390,1391,x0,y248,safe&height=416&width=416&fit=bounds" },
+                    { name: "Indra Nooyi", image: "https://eu-images.contentstack.com/v3/assets/blt58a1f8f560a1ab0e/bltba884782419824e4/669eda77d00066fcfd170abd/Pepsi_-_Nooyi_1533572874.jpg?width=1280&auto=webp&quality=95&format=jpg&disable=upscale" },
+                    { name: "Kiran Mazumdar-Shaw", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCIxLvpyDAdW9HvsG9OQ3WfabS7i4YR290nZqpgkTDdq5wNAFYXWTvnIVM-EnfOpyzQzY&usqp=CAU" },
+                    { name: "Vandana Luthra", image: "https://media.assettype.com/delhiwants/2024-09-11/q7tvmxt2/Vandana%20Luthra%20VLCC.PNG?w=1200&h=675&auto=format%2Ccompress&fit=max&enlarge=true" },
+                ]
+            },
+        ];
+
+        let currentQuestionIndex = 0;
+
+        function displayQuestion() {
+            const questionObj = questions[currentQuestionIndex];
+            document.getElementById("question").textContent = questionObj.question;
+
+            const buttons = document.querySelectorAll(".answer-buttons img");
+            questionObj.choices.forEach((choice, index) => {
+                buttons[index].src = choice.image;
+                buttons[index].alt = choice.name;
+                buttons[index].addEventListener('click', () => checkAnswer(choice.name));
+            });
+
+            document.getElementById("result").textContent = "";
+        }
+
+        function checkAnswer(selectedAnswer) {
+            const correctAnswer = questions[currentQuestionIndex].correctAnswer;
+            if (selectedAnswer === correctAnswer) {
+                document.getElementById("result").textContent = `Correct! Well done ${correctAnswer}.`;
+            } else {
+                document.getElementById("result").textContent = `Oops! The correct answer was ${correctAnswer}.`;
+            }
+
+            // Move to next question after a short delay
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    displayQuestion();
+                } else {
+                    document.getElementById("question").textContent = "You've completed the game!";
+                    document.querySelector(".answer-buttons").style.display = "none";
+                }
+            }, 1000);
+        }
+
+        // Initialize the game
+        displayQuestion();
+    </script>
+</body>
+</html>

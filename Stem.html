@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Women in STEM Mars Colony</title>
+    <style>
+        /* === CSS === */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0a0a1a;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            background-image: url('https://mars.nasa.gov/imgs/2016/11/mars-terrain-1200.jpg');
+            background-size: cover;
+        }
+        
+        .game-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(255, 100, 100, 0.3);
+        }
+        
+        h1 {
+            color: #ff6b6b;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+        
+        .game-area {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+        }
+        
+        .resources {
+            background-color: rgba(30, 30, 60, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #445;
+        }
+        
+        .resource {
+            margin-bottom: 10px;
+        }
+        
+        .resource-name {
+            font-weight: bold;
+            color: #4fc3f7;
+        }
+        
+        .resource-value {
+            float: right;
+        }
+        
+        .events {
+            background-color: rgba(20, 20, 40, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            min-height: 300px;
+            border: 1px solid #445;
+        }
+        
+        .event-text {
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .choices {
+            display: grid;
+            gap: 10px;
+        }
+        
+        button {
+            background-color: #3949ab;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+        
+        button:hover {
+            background-color: #5c6bc0;
+            transform: translateY(-2px);
+        }
+        
+        button:disabled {
+            background-color: #333;
+            color: #666;
+            cursor: not-allowed;
+        }
+        
+        .leader-portrait {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid #ff6b6b;
+            margin: 10px auto;
+            display: block;
+            object-fit: cover;
+        }
+        
+        .leader-name {
+            text-align: center;
+            color: #ff6b6b;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .win-screen, .lose-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .win-screen h2 {
+            color: #4caf50;
+            font-size: 3em;
+        }
+        
+        .lose-screen h2 {
+            color: #f44336;
+            font-size: 3em;
+        }
+        
+        .restart-btn {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background-color: #ff6b6b;
+        }
+        
+        .day-counter {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            color: #ff6b6b;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Women in STEM Mars Colony</h1>
+        <p class="subtitle">Lead your colony to survival with guidance from history's greatest female scientists</p>
+        
+        <div class="day-counter">Day: <span id="day">1</span>/30</div>
+        
+        <div class="game-area">
+            <div class="resources">
+                <img src="https://www.nasa.gov/wp-content/uploads/2021/06/katherine-johnson-2017.jpg" class="leader-portrait" id="leader-img">
+                <div class="leader-name" id="leader-name">Katherine Johnson</div>
+                
+                <h3>Colony Resources</h3>
+                <div class="resource">
+                    <span class="resource-name">Oxygen:</span>
+                    <span class="resource-value" id="oxygen">100%</span>
+                </div>
+                <div class="resource">
+                    <span class="resource-name">Food:</span>
+                    <span class="resource-value" id="food">100%</span>
+                </div>
+                <div class="resource">
+                    <span class="resource-name">Energy:</span>
+                    <span class="resource-value" id="energy">100%</span>
+                </div>
+                <div class="resource">
+                    <span class="resource-name">Morale:</span>
+                    <span class="resource-value" id="morale">100%</span>
+                </div>
+                <div class="resource">
+                    <span class="resource-name">Science:</span>
+                    <span class="resource-value" id="science">0</span>
+                </div>
+            </div>
+            
+            <div class="events">
+                <div class="event-text" id="event-text">
+                    Welcome to Mars! As colony leader, you'll face challenges that require scientific thinking. 
+                    Each day, historical women in STEM will offer advice to help you survive.
+                </div>
+                <div class="choices" id="choices">
+                    <button onclick="startGame()">Begin Mission</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="win-screen" id="win-screen">
+        <h2>Mission Success!</h2>
+        <p>Your colony has thrived for 30 days thanks to scientific leadership.</p>
+        <button class="restart-btn" onclick="restartGame()">Play Again</button>
+    </div>
+    
+    <div class="lose-screen" id="lose-screen">
+        <h2>Mission Failed</h2>
+        <p id="lose-reason">Your colony didn't survive the challenges of Mars.</p>
+        <button class="restart-btn" onclick="restartGame()">Try Again</button>
+    </div>
+
+    <script>
+        // === JavaScript ===
+        // Game State
+        let state = {
+            day: 1,
+            oxygen: 100,
+            food: 100,
+            energy: 100,
+            morale: 100,
+            science: 0,
+            currentLeader: 0,
+            gameStarted: false
+        };
+        
+        // Women in STEM leaders
+        const leaders = [
+            {
+                name: "Katherine Johnson",
+                image: "https://www.nasa.gov/wp-content/uploads/2021/06/katherine-johnson-2017.jpg",
+                specialty: "Mathematics",
+                quote: "Like what you do, and then you will do your best."
+            },
+            {
+                name: "Mae Jemison",
+                image: "https://www.nasa.gov/wp-content/uploads/2023/06/jemison-m-portrait.jpg",
+                specialty: "Astronautics",
+                quote: "Never limit yourself because of others' limited imagination."
+            },
+            {
+                name: "Grace Hopper",
+                image: "https://news.yale.edu/sites/default/files/styles/featured_media/public/hop1-0108_011_0.jpg?itok=3i1E5_0W",
+                specialty: "Computer Science",
+                quote: "It's easier to ask forgiveness than it is to get permission."
+            },
+            {
+                name: "Rosalind Franklin",
+                image: "https://www.sdsc.edu/ScienceWomen/franklin.jpg",
+                specialty: "Molecular Biology",
+                quote: "Science and everyday life cannot and should not be separated."
+            }
+        ];
+        
+        // Game Events
+        const events = [
+            {
+                text: "A dust storm is approaching the colony! It could damage our solar panels and reduce energy production.",
+                options: [
+                    {
+                        text: "Shut down non-essential systems (Grace Hopper's approach: efficient resource allocation)",
+                        effects: { energy: -10, science: +5 },
+                        response: "Your energy-saving measures worked. The storm passed with minimal damage."
+                    },
+                    {
+                        text: "Deploy experimental wind turbines (Mae Jemison's approach: innovative solutions)",
+                        effects: { energy: -30, science: +15 },
+                        response: "The turbines worked! You've developed a new energy source for future storms."
+                    },
+                    {
+                        text: "Do nothing and hope for the best",
+                        effects: { energy: -50, morale: -20 },
+                        response: "The storm severely damaged your solar arrays. Energy production is down."
+                    }
+                ]
+            },
+            {
+                text: "The oxygen recycler is malfunctioning. Oxygen levels are dropping slowly but steadily.",
+                options: [
+                    {
+                        text: "Calculate optimal repair schedule (Katherine Johnson's approach: precise calculations)",
+                        effects: { oxygen: +20, science: +10 },
+                        response: "Your precise repair plan fixed the issue with minimal resource expenditure."
+                    },
+                    {
+                        text: "Ration oxygen while researching algae solutions (Rosalind Franklin's approach: biological research)",
+                        effects: { oxygen: -10, science: +20 },
+                        response: "The algae research shows promise for long-term oxygen production!"
+                    },
+                    {
+                        text: "Divert all power to life support",
+                        effects: { oxygen: +10, energy: -40 },
+                        response: "You stabilized oxygen but drained your energy reserves."
+                    }
+                ]
+            },
+            {
+                text: "Colonists are arguing about resource allocation. Morale is suffering.",
+                options: [
+                    {
+                        text: "Implement transparent resource tracking (Grace Hopper's approach: clear systems)",
+                        effects: { morale: +25, science: +5 },
+                        response: "The new transparency restored trust in colony leadership."
+                    },
+                    {
+                        text: "Organize a stargazing night (Mae Jemison's approach: inspiration)",
+                        effects: { morale: +15, energy: -10 },
+                        response: "The colonists loved reconnecting with the cosmos. Morale improved."
+                    },
+                    {
+                        text: "Reduce rations to equalize suffering",
+                        effects: { morale: -30, food: +20 },
+                        response: "The colonists are now equally unhappy. This didn't solve the problem."
+                    }
+                ]
+            },
+            {
+                text: "A rare mineral deposit was found that could advance our research, but extraction is dangerous.",
+                options: [
+                    {
+                        text: "Calculate optimal extraction path (Katherine Johnson's approach)",
+                        effects: { science: +25, oxygen: -10 },
+                        response: "Your precise calculations minimized risk while maximizing scientific gain."
+                    },
+                    {
+                        text: "Train colonists in proper procedures (Rosalind Franklin's approach)",
+                        effects: { science: +15, morale: +10 },
+                        response: "The training empowered your team and yielded good results."
+                    },
+                    {
+                        text: "Avoid risk - don't extract",
+                        effects: { morale: -10 },
+                        response: "The colony missed an important scientific opportunity."
+                    }
+                ]
+            }
+        ];
+        
+        // DOM Elements
+        const dayEl = document.getElementById('day');
+        const oxygenEl = document.getElementById('oxygen');
+        const foodEl = document.getElementById('food');
+        const energyEl = document.getElementById('energy');
+        const moraleEl = document.getElementById('morale');
+        const scienceEl = document.getElementById('science');
+        const eventTextEl = document.getElementById('event-text');
+        const choicesEl = document.getElementById('choices');
+        const leaderImgEl = document.getElementById('leader-img');
+        const leaderNameEl = document.getElementById('leader-name');
+        const winScreen = document.getElementById('win-screen');
+        const loseScreen = document.getElementById('lose-screen');
+        const loseReasonEl = document.getElementById('lose-reason');
+        
+        // Game Functions
+        function updateDisplay() {
+            dayEl.textContent = state.day;
+            oxygenEl.textContent = state.oxygen + '%';
+            foodEl.textContent = state.food + '%';
+            energyEl.textContent = state.energy + '%';
+            moraleEl.textContent = state.morale + '%';
+            scienceEl.textContent = state.science;
+            
+            // Update resource colors based on levels
+            oxygenEl.style.color = state.oxygen < 30 ? '#ff5252' : '#4fc3f7';
+            foodEl.style.color = state.food < 30 ? '#ff5252' : '#4fc3f7';
+            energyEl.style.color = state.energy < 30 ? '#ff5252' : '#4fc3f7';
+            moraleEl.style.color = state.morale < 30 ? '#ff5252' : '#4fc3f7';
+        }
+        
+        function changeLeader() {
+            state.currentLeader = Math.floor(Math.random() * leaders.length);
+            leaderImgEl.src = leaders[state.currentLeader].image;
+            leaderNameEl.textContent = leaders[state.currentLeader].name;
+        }
+        
+        function applyEffects(effects) {
+            for (const [key, value] of Object.entries(effects)) {
+                state[key] += value;
+                // Clamp values between 0-100 (except science)
+                if (key !== 'science') {
+                    state[key] = Math.max(0, Math.min(100, state[key]));
+                }
+            }
+        }
+        
+        function checkGameOver() {
+            if (state.oxygen <= 0) {
+                endGame(false, "The colony ran out of oxygen.");
+                return true;
+            }
+            if (state.food <= 0) {
+                endGame(false, "The colony ran out of food.");
+                return true;
+            }
+            if (state.energy <= 0) {
+                endGame(false, "The colony ran out of energy.");
+                return true;
+            }
+            if (state.morale <= 0) {
+                endGame(false, "The colonists lost all morale and rebelled.");
+                return true;
+            }
+            if (state.day >= 30) {
+                endGame(true);
+                return true;
+            }
+            return false;
+        }
+        
+        function endGame(won, reason) {
+            if (won) {
+                winScreen.style.display = 'flex';
+            } else {
+                loseReasonEl.textContent = reason;
+                loseScreen.style.display = 'flex';
+            }
+        }
+        
+        function nextDay() {
+            state.day++;
+            changeLeader();
+            
+            // Daily resource drain
+            applyEffects({
+                oxygen: -5,
+                food: -8,
+                energy: -7,
+                morale: -3
+            });
+            
+            // Science helps reduce resource drain
+            if (state.science >= 20) applyEffects({ oxygen: +2 });
+            if (state.science >= 40) applyEffects({ food: +2 });
+            if (state.science >= 60) applyEffects({ energy: +2 });
+            if (state.science >= 80) applyEffects({ morale: +2 });
+            
+            updateDisplay();
+            
+            if (checkGameOver()) return;
+            
+            // Show random event
+            const event = events[Math.floor(Math.random() * events.length)];
+            eventTextEl.innerHTML = `<strong>Day ${state.day}:</strong> ${event.text}<br><br><em>"${leaders[state.currentLeader].quote}"</em>`;
+            
+            choicesEl.innerHTML = '';
+            event.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.textContent = option.text;
+                btn.onclick = () => chooseOption(option);
+                choicesEl.appendChild(btn);
+            });
+        }
+        
+        function chooseOption(option) {
+            eventTextEl.innerHTML = `<strong>Day ${state.day} Result:</strong> ${option.response}`;
+            applyEffects(option.effects);
+            updateDisplay();
+            
+            choicesEl.innerHTML = '';
+            const nextBtn = document.createElement('button');
+            nextBtn.textContent = 'Continue to Next Day';
+            nextBtn.onclick = nextDay;
+            choicesEl.appendChild(nextBtn);
+            
+            checkGameOver();
+        }
+        
+        function startGame() {
+            state = {
+                day: 1,
+                oxygen: 100,
+                food: 100,
+                energy: 100,
+                morale: 100,
+                science: 0,
+                currentLeader: 0,
+                gameStarted: true
+            };
+            changeLeader();
+            updateDisplay();
+            nextDay();
+        }
+        
+        function restartGame() {
+            winScreen.style.display = 'none';
+            loseScreen.style.display = 'none';
+            startGame();
+        }
+        
+        // Initialize
+        updateDisplay();
+    </script>
+</body>
+</html>

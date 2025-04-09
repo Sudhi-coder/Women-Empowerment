@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Women Empowerment Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9f9f9;
+            text-align: center;
+        }
+        header {
+            background: #ff69b4;
+            color: white;
+            padding: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .quiz {
+            margin-top: 20px;
+            padding: 30px;
+            background: #ffe4e1;
+            border-radius: 10px;
+            font-size: 20px;
+        }
+        .quiz button {
+            padding: 12px 25px;
+            background: #ff69b4;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+        #timer {
+            font-size: 22px;
+            font-weight: bold;
+            color: red;
+            margin-bottom: 15px;
+        }
+        .score-card {
+            display: none;
+            margin-top: 20px;
+            padding: 25px;
+            background: #fff3cd;
+            border-radius: 10px;
+            font-size: 22px;
+        }
+    </style>
+    <script>
+        let currentQuestion = 0;
+        let timeLeft = 30;
+        let timer;
+        let score = 0;
+
+        const questions = [
+            { q: "1.What is the main goal of women empowerment?", options: ["To make women superior", "To ensure equal rights and opportunities", "To separate women from society"], answer: 1 },
+            { q: "2.Who was the first woman to win a Nobel Prize?", options: ["Marie Curie", "Rosalind Franklin", "Ada Lovelace"], answer: 0 },
+            { q: "3.Which movement fought for women's voting rights?", options: ["Suffrage Movement", "Civil Rights Movement", "Green Movement"], answer: 0 },
+            { q: "4.Which country was the first to grant women the right to vote?", options: ["USA", "New Zealand", "Germany"], answer: 1 },
+            { q: "5.What does gender equality mean?", options: ["Women are better than men", "Men and women have equal rights", "Men should dominate society"], answer: 1 },
+            { q: "6.Which organization works for women's rights globally?", options: ["UN Women", "NASA", "WHO"], answer: 0 },
+            { q: "7.What is the glass ceiling?", options: ["A barrier for women's career growth", "A type of window", "An economic term"], answer: 0 },
+            { q: "8.Who is a famous advocate for girls' education?", options: ["Malala Yousafzai", "Serena Williams", "Oprah Winfrey"], answer: 0 },
+            { q: "9.What does feminism advocate?", options: ["Equal rights for all genders", "Women's dominance", "Exclusion of men"], answer: 0 },
+            { q: "10.Which field has the lowest female representation?", options: ["Technology", "Education", "Healthcare"], answer: 0 }
+        ];
+
+        function startQuiz() {
+            document.getElementById("start").style.display = "none";
+            document.getElementById("quiz").style.display = "block";
+            loadQuestion();
+            startTimer();
+        }
+
+        function startTimer() {
+            timer = setInterval(() => {
+                document.getElementById("timer").innerText = `Time Left: ${timeLeft}s`;
+                timeLeft--;
+                if (timeLeft < 0) {
+                    nextQuestion();
+                }
+            }, 1000);
+        }
+
+        function loadQuestion() {
+            if (currentQuestion >= questions.length) {
+                endQuiz();
+                return;
+            }
+            
+            let q = questions[currentQuestion];
+            document.getElementById("question").innerText = q.q;
+            let optionsHtml = "";
+            q.options.forEach((option, index) => {
+                optionsHtml += `<label><input type='radio' name='option' value='${index}'> ${option}</label><br>`;
+            });
+            document.getElementById("options").innerHTML = optionsHtml;
+        }
+
+        function nextQuestion() {
+            clearInterval(timer);
+            let selectedOption = document.querySelector("input[name='option']:checked");
+            if (selectedOption && parseInt(selectedOption.value) === questions[currentQuestion].answer) {
+                score++;
+            }
+            
+            currentQuestion++;
+            timeLeft = 30;
+            loadQuestion();
+            startTimer();
+        }
+
+        function endQuiz() {
+            document.getElementById("quiz").style.display = "none";
+            document.getElementById("score-card").style.display = "block";
+            document.getElementById("score").innerText = `Your Score: ${score}/10`;
+            if (score >= 7) {
+                document.body.style.background = "#ffcccb";
+                alert("🎉 Congratulations! Fireworks! 🎉");
+            } else {
+                document.getElementById("message").innerText = "Keep pushing forward! Every step counts! 💪";
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>Women Empowerment Quiz</header>
+    <div class="container">
+        <button id="start" onclick="startQuiz()">Start Quiz</button>
+        <div id="quiz" class="quiz" style="display: none;">
+            <div id="timer">Time Left: 30s</div>
+            <h2 id="question"></h2>
+            <div id="options"></div>
+            <button onclick="nextQuestion()">Next</button>
+        </div>
+        <div id="score-card" class="score-card">
+            <h2 id="score"></h2>
+            <p id="message"></p>
+        </div>
+    </div>
+    <footer>© 2025 Women Empowerment Initiative | All Rights Reserved</footer>
+</body>
+</html>

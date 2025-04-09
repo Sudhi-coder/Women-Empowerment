@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Women Who Changed the World - Puzzle Game</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        .container { max-width: 800px; margin: auto; }
+        .puzzle-container { display: flex; justify-content: space-between; margin-top: 20px; }
+        .column#names { width: 50%; display: flex; flex-direction: column; align-items: center; }
+        .column#achievements { width: 50%; display: flex; flex-direction: column; align-items: center; }
+        .draggable { padding: 10px; border: 1px solid #000; cursor: grab; margin: 5px; background-color: #f9c5d1; width: 80%; text-align: center; }
+        .droppable { padding: 10px; border: 2px dashed #000; width: 80%; min-height: 40px; background-color: #dff9fb; text-align: center; }
+        .droppable.hover { background-color: #aee0f7; }
+        .column-title { font-weight: bold; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Indian Women Who Changed the World - Puzzle Game</h1>
+        <p>Drag the names of famous Indian women to their achievements!</p>
+        
+        <div class="puzzle-container">
+            <div class="column" id="names">
+                <div class="column-title">Famous Indian Women</div>
+                <div class="draggable" draggable="true" id="indira">Indira Gandhi</div>
+                <div class="draggable" draggable="true" id="kalpana">Kalpana Chawla</div>
+                <div class="draggable" draggable="true" id="sarojini">Sarojini Naidu</div>
+                <div class="draggable" draggable="true" id="mothers">Mother Teresa</div>
+                <div class="draggable" draggable="true" id="mary">Mary Kom</div>
+                <div class="draggable" draggable="true" id="saina">Saina Nehwal</div>
+                <div class="draggable" draggable="true" id="aruna">Aruna Roy</div>
+                <div class="draggable" draggable="true" id="baba">Baba Amte</div>
+            </div>
+            <div class="column" id="achievements">
+                <div class="droppable" data-match="indira">First female Prime Minister of India</div>
+                <div class="droppable" data-match="kalpana">First Indian woman in space</div>
+                <div class="droppable" data-match="sarojini">First woman to become the president of the Indian National Congress</div>
+                <div class="droppable" data-match="mothers">Founder of Missionaries of Charity</div>
+                <div class="droppable" data-match="mary">World Champion in Boxing</div>
+                <div class="droppable" data-match="saina">First Indian woman to win an Olympic medal in Badminton</div>
+                <div class="droppable" data-match="aruna">Leader in the Right to Information movement</div>
+                <div class="droppable" data-match="baba">Social activist, worked for the rights of leprosy patients</div>
+            </div>
+        </div>
+        
+        <p id="result"></p>
+    </div>
+
+    <script>
+        const draggables = document.querySelectorAll('.draggable');
+        const droppables = document.querySelectorAll('.droppable');
+
+        // Shuffle function for randomizing the achievement divs
+        function shuffleAchievements() {
+            const achievementContainer = document.getElementById('achievements');
+            const droppableElements = Array.from(achievementContainer.children);
+            droppableElements.sort(() => Math.random() - 0.5);  // Simple shuffle method
+
+            droppableElements.forEach(element => {
+                achievementContainer.appendChild(element);  // Reattach shuffled elements
+            });
+        }
+
+        // Initialize shuffling of achievements
+        shuffleAchievements();
+
+        draggables.forEach(draggable => {
+            draggable.addEventListener('dragstart', event => {
+                event.dataTransfer.setData('text', event.target.id);
+            });
+        });
+
+        droppables.forEach(droppable => {
+            droppable.addEventListener('dragover', event => {
+                event.preventDefault();
+                droppable.classList.add('hover');
+            });
+            droppable.addEventListener('dragleave', () => {
+                droppable.classList.remove('hover');
+            });
+            droppable.addEventListener('drop', event => {
+                event.preventDefault();
+                droppable.classList.remove('hover');
+                const draggedId = event.dataTransfer.getData('text');
+                if (draggedId === droppable.getAttribute('data-match')) {
+                    droppable.innerText = document.getElementById(draggedId).innerText;
+                    document.getElementById(draggedId).style.display = 'none';
+                    checkWin();
+                }
+            });
+        });
+
+        function checkWin() {
+            const matched = document.querySelectorAll('.draggable[style="display: none;"]').length;
+            if (matched === droppables.length) {
+                document.getElementById('result').innerText = "Congratulations! You matched all correctly!";
+            }
+        }
+    </script>
+</body>
+</html>
